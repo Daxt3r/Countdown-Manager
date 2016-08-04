@@ -5,8 +5,11 @@ Simples Tool, welches die Differenz zwischen der aktuellen Uhrzeit und der Feier
 
 - Berechnet die Differenz zwischen der aktuellen Uhrzeit und der Uhrzeit des Feierabends
 - Beim erreichen der Feierabendszeit, wird der Rechner heruntergefahren
+- Es können für die jeweiligen Wochentage individuelle Feierabendszeiten festgelegt werden
+  - Dies kann ebenfalls ein/aus geschaltet werden 
+- Es können die Sekunden ein/aus geschaltet werden bei der Anzeige
+- Es kann das Herunterfahren ein/aus geschaltet werden
 
 #Geplant
 
-- Erweitertes Einlesen der Informationen aus der Eigenschaften.txt Datei
-- Multithreading, sodass gleichzeitig die Uhrzeit angezeigt wird und eine Eingabe zum Verändern der Eigenschaften Datei möglich ist
+- Sämtliche geplante Funktionen wurden eingefügt, es werden nur noch Fehler behoben!
