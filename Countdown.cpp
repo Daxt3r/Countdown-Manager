@@ -1,10 +1,15 @@
 // Countdown.cpp: Hauptprojektdatei.
 	
-	//Version V0.6.1 (Alpha) (Stand 04.08.2016)
+	//Version V0.6.5 (Beta) (Stand 08.08.2016)
 	
 	//Update History
 	//-------------------------------------------
-	// # 04.08.2016: Es wird nun geprüft ob eine individuelle Zeit für den aktuellen Tag festgelegt, diese wird dann zur Berechnung verwendet (Version geändert von 0.6.0 zu 0.6.1) 
+	// # 19.08.2016: Initialisierung der Variablen in struct tWeekday hinzugefügt, womit ein Ausgabefehler behoben wurde (Version geändert von 0.6.4 zu 0.6.5)
+	// # 08.08.2016: Fehler behoben, dass nicht alle Daten bei einem falsch eingelesenen Wert in die Eigenschaften Datei geschrieben werden (Version geändet von 0.6.3 zu 0.6.4) 
+	//				 Es wird nun beim Einlesen geprüft ob die individuelle Feierabendszeit != 00:00 ist (Version geändert von 0.6.2 zu 0.6.3)
+	//				 Fehler beim Einlesen der individuellen Uhrzeit behoben (Probleme beim Einlesen des Wertes "-") (Version geändert von 0.6.1 zu 0.6.2)
+	// # 04.08.2016: Status des Programmes von Alpha zu Beta geändert
+	//				 Es wird nun geprüft ob eine individuelle Zeit für den aktuellen Tag festgelegt, diese wird dann zur Berechnung verwendet (Version geändert von 0.6.0 zu 0.6.1) 
 	//				 Funktion zum Einlesen der jeweiligen individuellen Werte für jeden Tag geschrieben (Version geändert von 0.5.4 zu 0.6.0)
 	//				 Fehler beim Überschreiten der Endzeit behoben (Uhrzeit wurde trotzdem berechnet)
 	//				 Fehler beim Überprüfen der Uhrzeit behoben (Version geändert von 0.5.2 zu 0.5.4)
@@ -96,13 +101,23 @@ int main(array<System::String ^> ^args)
 //Parameter: - *pEigenschaften = Zeiger auf die Struktur tEigenschaften
 void Init_tEigenschaften(struct tEigenschaften *pEigenschaften)
 {
+	int i = 0;
+
 	pEigenschaften->fpEigenschaften = NULL;
 	pEigenschaften->nEndStd = 0;
 	pEigenschaften->nEndMin = 0;
 	strcpy(pEigenschaften->cShutdown, "");
 	strcpy(pEigenschaften->cSeconds, "");
 	strcpy(pEigenschaften->cLastChange, "");
+	strcpy(pEigenschaften->cWeekday, "");
 	pEigenschaften->nShutdownTime = 30;
+
+	for(i = 0; i < MAXDAYS; i++)
+	{
+		pEigenschaften->pWday.nDaySet[i] = 0;
+		pEigenschaften->pWday.nEndStd[i] = 0;
+		pEigenschaften->pWday.nEndMin[i] = 0;
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------
@@ -114,7 +129,7 @@ void FirstStartDialog(struct tEigenschaften *pEigenschaften)
 	pEigenschaften->fpEigenschaften = Open_File("Eigenschaften.txt", "w"); //Eigenschaften Textdatei wird erstellt
 
 	printf("Willkommen beim Countdown-Manager (CM)\n\n");
-	printf("Dies ist Ihr erster Start des CM's. Daher muessen Sie zuerst ein\npaar Eigenschaften fuer die Nutzung sfestlegen.\n\n");
+	printf("Dies ist Ihr erster Start des CM's. Daher muessen Sie zuerst ein\npaar Eigenschaften fuer die Nutzung festlegen.\n\n");
 
 	DatenEingeben(pEigenschaften); //Die Daten werden vom Benutzer eingegeben
 }
